@@ -1,7 +1,7 @@
 import os
 import google.generativeai as genai
 
-GEMINI_MODEL_NAME = "gemini-1.5-flash"
+GEMINI_MODEL_NAME = "gemini-pro-latest"
 
 
 def configure_llm():
