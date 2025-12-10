@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Prevent committing any .env file into the repo
+
+staged_files=$(git diff --cached --name-only)
+
+if echo "$staged_files" | grep -E '(^|/)\.env$' >/dev/null; then
+  echo "ERROR: Attempt to commit a .env file detected. Remove it from staging (git reset HEAD .env) and use a secrets manager or set the value at runtime."
+  exit 1
+fi
+
+exit 0

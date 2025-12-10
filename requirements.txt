@@ -1,0 +1,10 @@
+streamlit
+google-generativeai
+chromadb
+requests
+streamlit
+google-generativeai
+chromadb
+requests
+python-dotenv
+pymongo

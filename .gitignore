@@ -1,0 +1,53 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+.pnpm-debug.log
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+
+# Runtime data
+*.log
+
+# Environment files / Secrets
+.env
+.env.local
+.env.*.local
+
+# Python stuff
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+.pytest_cache/
+
+# Virtualenv
+.venv/
+
+# Local data
+data/
+mongodb-data/
+mongodb-config/
+dynamodb-data/
+
+# Docker / compose overrides
+docker-compose.override.yml
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# macOS
+.DS_Store
+
+# Misc
+coverage/
+.cache/
+*.pid
