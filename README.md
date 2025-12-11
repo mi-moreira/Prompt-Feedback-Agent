@@ -30,6 +30,28 @@ docker-compose up -d mongodb
 streamlit run ui/app.py
 ```
 
+## Docker
+- Build:
+```sh
+docker build -t morphia-chat .
+```
+- Run (make sure `.env` has your GEMINI_API_KEY/model; mount or use --env-file):
+```sh
+docker run --rm -p 8501:8501 --env-file .env morphia-chat
+```
+- MongoDB (optional) via compose:
+```sh
+docker-compose up -d mongodb
+```
+- To run app + Mongo via compose (no host Python): ensure `.env` uses the service host, e.g. `MONGODB_URL=mongodb://root:change-me@morphia-mongodb-local:27017/morphia_db?authSource=admin`, then:
+```sh
+docker-compose up --build
+```
+
+## External APIs
+- ViaCEP (CEP lookup): mention a CEP (ex.: `CEP 01001000`) and the agent calls ViaCEP.
+- PokéAPI (Pokémon info): mention a Pokémon name (ex.: `pokemon pikachu`) to fetch basic stats.
+
 ## Language / UX
 - Default UX is Portuguese (PT-BR) for studio-facing users; docs are in English.
 - UI labels can be toggled (PT/EN) in the app; system prompt/content remains PT-BR by default.
