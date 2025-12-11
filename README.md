@@ -56,6 +56,9 @@ docker-compose up --build
 - ViaCEP: `https://viacep.com.br/ws/{CEP}/json/` (GET). Triggered when the user message contains a valid CEP pattern (8 digits). Errors: CEP inválido/não encontrado are handled in-code and surfaced to the user.
 - PokéAPI: `https://pokeapi.co/api/v2/pokemon/{name}` (GET). Triggered when the user mentions “pokemon” + a name. Errors: Pokémon não encontrado handled in-code.
 
+## Docs
+- High-level overview: `docs/overview.md`
+
 ## Language / UX
 - Default UX is Portuguese (PT-BR) for studio-facing users; docs are in English.
 - UI labels can be toggled (PT/EN) in the app; system prompt/content remains PT-BR by default.
