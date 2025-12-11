@@ -30,6 +30,11 @@ docker-compose up -d mongodb
 streamlit run ui/app.py
 ```
 
+## Language / UX
+- Default UX is Portuguese (PT-BR) for studio-facing users; docs are in English.
+- UI labels can be toggled (PT/EN) in the app; system prompt/content remains PT-BR by default.
+- Chroma is seeded with Morphia facts; prompt edits and history are stored locally in `data/prompt_state.json`.
+
 ## Usage
 - Chat tab: send a message, the agent may call tools (CEP lookup, Pokémon info) and cite Chroma context.
 - Feedback & Prompt tab: rate answers and submit feedback to rewrite the system prompt; changes are stored in `data/prompt_state.json`.
