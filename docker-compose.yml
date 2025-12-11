@@ -5,44 +5,38 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: morphia-app
+    env_file: .env
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - MONGODB_URL=${MONGODB_URL}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-      - DYNAMODB_ENDPOINT=${DYNAMODB_ENDPOINT}
+      # Override for in-cluster access
+      MONGODB_URL: mongodb://root:${MONGO_PASSWORD:-change-me}@mongodb:27017/morphia_db?authSource=admin
     ports:
       - "8501:8501"
     depends_on:
-      - morphia-mongodb-local
-      - dynamodb-local
-    volumes:
-      - ./:/app
+      - mongodb
+    networks:
+      - morphia-network
 
-  morphia-mongodb-local:
-    image: mongo:5.0
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: change-me
+  mongodb:
+    image: mongo:latest
+    container_name: morphia-mongodb-local
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
-
-  dynamodb-local:
-    image: amazon/dynamodb-local:latest
-    container_name: dynamodb-local
-    ports:
-      - "8000:8000"
-    command: "-jar DynamoDBLocal.jar -inMemory -sharedDb"
-    volumes:
-      - dynamodb-data:/home/dynamodblocal/data
+      - ./mongodb-data:/data/db
+      - ./mongodb-config:/data/configdb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-change-me}
+    command: mongod --auth
+    networks:
+      - morphia-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 10s
-      timeout: 5s
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 3s
       retries: 5
 
-volumes:
-  mongo-data:
-  dynamodb-data:
+networks:
+  morphia-network:
+    driver: bridge

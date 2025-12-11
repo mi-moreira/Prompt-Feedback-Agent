@@ -52,6 +52,10 @@ docker-compose up --build
 - ViaCEP (CEP lookup): mention a CEP (ex.: `CEP 01001000`) and the agent calls ViaCEP.
 - PokéAPI (Pokémon info): mention a Pokémon name (ex.: `pokemon pikachu`) to fetch basic stats.
 
+## API Documentation (used by the agent)
+- ViaCEP: `https://viacep.com.br/ws/{CEP}/json/` (GET). Triggered when the user message contains a valid CEP pattern (8 digits). Errors: CEP inválido/não encontrado are handled in-code and surfaced to the user.
+- PokéAPI: `https://pokeapi.co/api/v2/pokemon/{name}` (GET). Triggered when the user mentions “pokemon” + a name. Errors: Pokémon não encontrado handled in-code.
+
 ## Language / UX
 - Default UX is Portuguese (PT-BR) for studio-facing users; docs are in English.
 - UI labels can be toggled (PT/EN) in the app; system prompt/content remains PT-BR by default.
@@ -60,6 +64,12 @@ docker-compose up --build
 ## Usage
 - Chat tab: send a message, the agent may call tools (CEP lookup, Pokémon info) and cite Chroma context.
 - Feedback & Prompt tab: rate answers and submit feedback to rewrite the system prompt; changes are stored in `data/prompt_state.json`.
+
+## Examples
+- Contextual chat: “Me ajude a melhorar a descrição do meu estúdio de tatuagem.”
+- CEP lookup (ViaCEP): “Qual o endereço do CEP 01001000?”
+- PokéAPI: “pokemon pikachu” ou “Quais os tipos do pokemon charmander?”
+- Feedback flow: após uma resposta, vá em “Feedback & Prompt”, dê uma nota e envie “Considere que cobro 1600 de sinal”; o prompt será atualizado e armazenado em `data/prompt_state.json`.
 
 ## Testing MongoDB
 With Mongo running and env set, you can validate connectivity:
